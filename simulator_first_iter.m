@@ -83,10 +83,15 @@ function alpha_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+handles.prev_val = 45
+alpha1 = get(hObject,'Value');
+if isempty(alpha1)
+    alpha1 = handles.prev_val;
+end
 
-alpha = get(hObject,'Value');
-set(handles.alphaval,'String',num2str(alpha));
-setappdata(0,'a_val',alpha);
+set(handles.alphaval,'String',num2str(alpha1));
+handles.prev_val
+setappdata(0,'a_val',alpha1);
 
 % --- Executes during object creation, after setting all properties.
 function alpha_CreateFcn(hObject, eventdata, handles)
@@ -465,18 +470,44 @@ g=getappdata(0,'blaze_angle');
 idealalpha1=g + acosd(m_dupe*n*(10^-6)*lblaze/(2*sind(g)));
 f1val1=getappdata(0,'f1_val');
 dval1 = 2*f2val1*tan((betamax1-betamin1)/2);
-if isreal(betamax1) && isreal(betamin1) && isreal(sens) && isreal(idealalpha1)
-    set(handles.betamin,'String',num2str(betamin1));
-    set(handles.betamax,'String',num2str(betamax1));
-    set(handles.blazew,'String',num2str((lmin + lmax)/2));
-    set(handles.f2val,'String',num2str(f2val1));
-    set(handles.idealW,'String',num2str(lblaze/specres1/n/m_dupe));
-    set(handles.idealalpha,'String',num2str(idealalpha1))
-    set(handles.f1val,'String',num2str(f1val1))
-    set(handles.slitwidth,'String',num2str(f1val1*3*psize1*(10^-3)/f2val1));
-    set(handles.d,'String',num2str(dval1))
+if isreal(idealalpha1) 
+    if idealalpha1<90 
+            if isreal(betamax1) && isreal(betamin1) && isreal(sens) && isreal(idealalpha1) && isnumeric([a,n,m_dupe,lmin,lmax,specres1,psize1,f1val1])
+            set(handles.betamin,'String',num2str(betamin1));
+            set(handles.betamax,'String',num2str(betamax1));
+            set(handles.blazew,'String',num2str((lmin + lmax)/2));
+            set(handles.f2val,'String',num2str(f2val1));
+            set(handles.idealW,'String',num2str(lblaze/specres1/n/m_dupe));
+            set(handles.idealalpha,'String',num2str(idealalpha1))
+            set(handles.f1val,'String',num2str(f1val1))
+            set(handles.slitwidth,'String',num2str(f1val1*3*psize1*(10^-3)/f2val1));
+            set(handles.d,'String',num2str(dval1))
+            else
+            msgbox("Invalid Angle of Incidence.")
+            end
+    else
+        msgbox("Invalid Blaze angle. Try decreasing the blaze angle to get better results.")
+        set(handles.betamin,'String',num2str(betamin1));
+        set(handles.betamax,'String',num2str(betamax1));
+        set(handles.f2val,'String',num2str(f2val1));
+        set(handles.idealW,'String',num2str(lblaze/specres1/n/m_dupe));
+        set(handles.f1val,'String',num2str(f1val1))
+        set(handles.slitwidth,'String',num2str(f1val1*3*psize1*(10^-3)/f2val1));
+        set(handles.d,'String',num2str(dval1))
+        set(handles.idealalpha,'String','Error')
+        end
+      
 else
-err="Invalid values";
-set(handles.betamin,'String',err);
-set(handles.betamax,'String',err);
+    msgbox('Invalid Blaze angle. Try increasing the Blaze angle to get better results.')
+     set(handles.betamin,'String',num2str(betamin1));
+     set(handles.betamax,'String',num2str(betamax1));
+     set(handles.f2val,'String',num2str(f2val1));
+     set(handles.idealW,'String',num2str(lblaze/specres1/n/m_dupe));
+     set(handles.f1val,'String',num2str(f1val1))
+     set(handles.slitwidth,'String',num2str(f1val1*3*psize1*(10^-3)/f2val1));
+     set(handles.d,'String',num2str(dval1))
+     set(handles.idealalpha,'String','Error')
+
 end
+
+

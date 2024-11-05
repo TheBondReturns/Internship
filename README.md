@@ -1,4 +1,2 @@
 # Internship
-Developing a affordable Raman Spectrometer
-
-MATLAB GUI code for a Raman Spectrometer simulator
+Wrote a MATLAB software for an R&D company that optimizes system parameters for a UV-Vis-NIR Raman spectrometer.

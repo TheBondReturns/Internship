@@ -1,5 +1,5 @@
 # Internship
-Wrote a MATLAB software for an R&D company that optimizes system parameters for a UV-Vis-NIR Raman spectrometer.
+Wrote a MATLAB software for an R&D company that optimizes system parameters, maximizing wavelength resolution for a given UV-Vis-NIR Raman spectrometer system.
 
 Example setup:
 
